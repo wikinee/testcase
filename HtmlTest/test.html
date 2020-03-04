@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>RPM vs. DPKG</title>
+  <link rel="stylesheet" type="text/css" href="./test.css"/>
+ </head> 
+ <body> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <th>命令</th> 
+      <th>rpm</th> 
+      <th>dpkg</th> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>安装包</td> 
+      <td>rpm -i {package.rpm}</td> 
+      <td>dpkg -i {package.deb}</td> 
+     </tr> 
+     <tr> 
+      <td>更新包</td> 
+      <td>rpm -U {package.rpm}</td> 
+      <td>dpkg -i {package.deb}</td> 
+     </tr> 
+     <tr> 
+      <td>删除包</td> 
+      <td>rpm -e {package}</td> 
+      <td>dpkg -r {package}</td> 
+     </tr> 
+     <tr> 
+      <td>列出所有包</td> 
+      <td>rpm -qa</td> 
+      <td>dpkg -l</td> 
+     </tr> 
+     <tr> 
+      <td>查看包里的文件</td> 
+      <td>rpm -ql {package}</td> 
+      <td>dpkg -L {package}</td> 
+     </tr> 
+     <tr> 
+      <td>查看已安装的包信息</td> 
+      <td>rpm -qi</td> 
+      <td>dpkg -p {package}</td> 
+     </tr> 
+     <tr> 
+      <td>查看包文件信息</td> 
+      <td>rpm -qpi {package.rpm}</td> 
+      <td>dpkg -I {package.deb}</td> 
+     </tr> 
+     <tr> 
+      <td>列出包文件内容</td> 
+      <td>rpm -qpl {package.rpm}</td> 
+      <td>dpkg -c {package}</td> 
+     </tr> 
+     <tr> 
+      <td>检查所有安装的包[0]</td> 
+      <td>rpm -Va</td> 
+      <td>–</td> 
+     </tr> 
+     <tr> 
+      <td>查看文件属于哪个包</td> 
+      <td>rpm -qf {file}</td> 
+      <td>dpkg -S {file}</td> 
+     </tr> 
+     <tr> 
+      <td>检查包</td> 
+      <td>rpm -V {package}</td> 
+      <td>–</td> 
+     </tr> 
+     <tr> 
+      <td>查看包的所有版本</td> 
+      <td>yum –showduplicates list {package}</td> 
+      <td>apt-cache policy {package}</td> 
+     </tr> 
+     <tr> 
+      <td>安装特定包版本</td> 
+      <td>yum install {package}-2.3.4</td> 
+      <td>apt-get install {package}=3.4.5</td> 
+     </tr> 
+     <tr> 
+      <td>查找某个包含有命令</td> 
+      <td>yum whatprovides {package}</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div>  
+ </body>
+</html>
