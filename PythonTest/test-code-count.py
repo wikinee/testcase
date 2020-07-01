@@ -8,7 +8,9 @@
     UNPACK_CODE_PATH => 解压目录
     XLSX_FILE        => 生成 xlsx 文件的地址
     LOG_FILE         => 生成 log 文件的地址
-    CLOC_TIMEOUT     => 执行 cloc 和 grep 的命令最长时间
+    CLOC_TIMEOUT     => 出现 timeout 的原因：
+                        1. 执行 cloc 和 grep 的命令最长时间；
+                        2. 输出过大阻塞管道
     BLACK_LIST       => 目前已知的较大的包，会卡死，需要跳过
     调整索引参数重新运行，目前对 xlsx 文件、log 文件会增量写入。
 
@@ -33,7 +35,7 @@ BLACK_LIST= [
     'Unpack'
 ]
 
-class TestCodeCount(object):
+class TestCodeCount:
     """代码统计脚本
 
     说明：
@@ -145,9 +147,11 @@ class TestCodeCount(object):
         try:
             if filename is None:
                 sub_proc = subprocess.Popen(cmd, shell=True)
-                sub_proc.wait()
+                sub_proc.wait(CLOC_TIMEOUT)
             else:
-                sub_proc = subprocess.run(cmd, shell=True,
+                sub_proc = subprocess.run(cmd,
+                                          shell=True,
+                                          check=True,
                                           stdout=subprocess.PIPE,
                                           stderr=subprocess.PIPE)
                 with open(filename, 'ab+') as output_file:
@@ -253,7 +257,7 @@ class TestCodeCount(object):
         codes_nums = len(unpack_codes)
         if codes_nums == 0:
             return
-        if start_index >= end_index:
+        if start_index > end_index:
             self.failed_list.append("generate xlsx index error")
             return
         xlsx_nodes = []
@@ -281,7 +285,7 @@ class TestCodeCount(object):
                 cloc_sum_output = cloc_proc2.stdout.readlines()[0]
                 cloc_sum = self.get_sum(cloc_sum_output)
             except Exception as e:
-                print("{} for {}".format(e, code_dir))
+                print("{} for {}\n".format(e, code_dir))
                 self.failed_list.append("{} for {}".format(e, code_dir))
                 cloc_sum = 0
             control_file = code_dir + '/debian/control'
