@@ -55,6 +55,7 @@ class TestCodeCount:
         20200628 first release by niyl
         20200629 split unpack and cloc function
         20200630 add from_index and to_index feature, or pass less than 0 to skip it
+        20200701 optimizate write log rules
     """
 
     def __init__(self):
